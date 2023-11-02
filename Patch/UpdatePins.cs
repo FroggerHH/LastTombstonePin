@@ -10,7 +10,8 @@ public class UpdatePins
     {
         var minimap = Minimap.instance;
         if (!__instance || !minimap || __instance != minimap) return;
-        var pingsToDelete = minimap.m_pins.FindAll(x => x.m_icon == mapPingSprite);
+        var pingsToDelete = minimap.m_pins.FindAll(x => x.m_icon == mapPingSprite && 
+                                                        x.m_ownerID == m_localPlayer.GetPlayerID());
         if (pingsToDelete != null && pingsToDelete.Count > 0)
             foreach (var pinData in pingsToDelete)
             {
