@@ -10,7 +10,7 @@ public class Plugin : BaseUnityPlugin
     public static readonly int hash = "Player_tombstone".GetStableHashCode();
 
     public const string ModName = "LastTombstonePin",
-        ModVersion = "1.2.0",
+        ModVersion = "1.3.0",
         ModGUID = $"com.{ModAuthor}.{ModName}",
         ModAuthor = "JustAFrogger";
 
@@ -19,6 +19,7 @@ public class Plugin : BaseUnityPlugin
     public static ConfigEntry<bool> animate;
     public static ConfigEntry<bool> distantTeleport;
     public static ConfigEntry<int> pinTypeID;
+    public static ConfigEntry<bool> showYourNameOnTombstonePin;
 
 
     private void Awake()
@@ -34,5 +35,6 @@ public class Plugin : BaseUnityPlugin
             "Should the ping smoothly grow in size and shrink in size on minimap?");
         distantTeleport = config("General", "Distant teleport", false, "");
         pinTypeID = config("General", "Pin type id", 20, "Id will be given to the pin");
+        showYourNameOnTombstonePin = config("General", "Show your name on tombstone pin", false, "");
     }
 }

@@ -10,8 +10,7 @@ public class UpdatePins
     {
         var minimap = Minimap.instance;
         if (!__instance || !minimap || __instance != minimap) return;
-        var pingsToDelete = minimap.m_pins.FindAll(x => x.m_icon == mapPingSprite && 
-                                                        x.m_ownerID == m_localPlayer.GetPlayerID());
+        var pingsToDelete = minimap.m_pins.FindAll(x => x.m_icon == mapPingSprite);
         if (pingsToDelete != null && pingsToDelete.Count > 0)
             foreach (var pinData in pingsToDelete)
             {
@@ -21,24 +20,23 @@ public class UpdatePins
                 minimap.m_pins.Remove(pinData);
             }
 
-        var zdos = ZDOMan.instance.GetImportantZDOs(hash).ToList();
-        if (zdos != null && zdos.Count > 0)
+        var zdo = ZDOMan.instance.GetImportantZDOs(hash)?
+            .Where(x => x?.GetLong(ZDOVars.s_owner) == m_localPlayer?.GetPlayerID())?
+            .OrderBy(x => x?.GetLong(ImportantZDOs.ZDO_Created_Hash))?.LastOrDefault();
+        if (zdo != null)
         {
-            zdos = zdos.OrderBy(x => x.GetLong(ImportantZDOs.ZDO_Created_Hash)).ToList();
-            var zdo = zdos.Last();
-
-            var author = zdo.GetString(ZDOVars.s_ownerName, "<color=red>error</color>");
+            var author = zdo.GetString(ZDOVars.s_ownerName);
             var pin = new PinData();
             pin.m_doubleSize = doubleSize.Value;
             pin.m_animate = animate.Value;
             pin.m_icon = mapPingSprite;
-            pin.m_name = author;
+            pin.m_name = showYourNameOnTombstonePin.Value ? author : string.Empty;
             pin.m_save = false;
             pin.m_checked = false;
             pin.m_pos = zdo.GetPosition();
             pin.m_type = (PinType)pinTypeID.Value;
             pin.m_NamePinData = new PinNameData(pin);
-            pin.m_ownerID = zdo.GetLong(ZDOVars.s_owner);
+            pin.m_ownerID = 0L;
             pin.m_author = author;
             minimap.m_pins.Add(pin);
         }
