@@ -1,6 +1,6 @@
 ﻿using static EffectList;
 
-namespace LastTombstonePin;
+namespace LastTombstonePin.Patch;
 
 [HarmonyPatch]
 public class NoDeathRagdoll

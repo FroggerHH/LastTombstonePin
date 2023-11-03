@@ -1,4 +1,4 @@
-﻿namespace LastTombstonePin;
+﻿namespace LastTombstonePin.Patch;
 
 [HarmonyPatch]
 public class FixPinTypeError
