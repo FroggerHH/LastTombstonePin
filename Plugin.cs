@@ -11,13 +11,13 @@ public class Plugin : BaseUnityPlugin
     public static readonly int Hash = "Player_tombstone".GetStableHashCode();
 
     public const string ModName = "LastTombstonePin",
-        ModVersion = "1.4.0",
+        ModVersion = "1.5.1",
         ModGUID = $"com.{ModAuthor}.{ModName}",
         ModAuthor = "JustAFrogger";
 
     private static Sprite mapPingSprite;
     private static ConfigEntry<bool> doubleSize;
-    private static ConfigEntry<bool> animate; 
+    private static ConfigEntry<bool> animate;
     public static ConfigEntry<bool> distantTeleport;
     private static ConfigEntry<int> pinTypeID;
     private static ConfigEntry<bool> showYourNameOnTombstonePin;
@@ -45,7 +45,9 @@ public class Plugin : BaseUnityPlugin
         var minimap = Minimap.instance;
         if (!minimap) return;
         var pingsToDelete = minimap.m_pins.FindAll(x => x.m_icon == mapPingSprite || x.m_type == Death);
-        if (pingsToDelete.Count > 0) foreach (var pinData in pingsToDelete) minimap.RemovePin(pinData);
+        if (pingsToDelete.Count > 0)
+            foreach (var pinData in pingsToDelete)
+                minimap.RemovePin(pinData);
 
         var zdos = ZDOMan.instance.GetImportantZDOs(Hash)?
             .Where(x => x is not null && x.IsValid())
@@ -53,12 +55,19 @@ public class Plugin : BaseUnityPlugin
             .OrderBy(x => x.GetLong(ImportantZDOs.ZDO_Created_Hash)).ToList();
         if (zdos.Count == 0) return;
         var targetZDO = zdos.LastOrDefault();
-        zdos.Remove(targetZDO);
-        CreatePin(targetZDO);
+        if (targetZDO != null && targetZDO.GetBool("IsLastTombstone", defaultValue: true))
+        {
+            targetZDO.Set("IsLastTombstone", true);
+            zdos.Remove(targetZDO);
+            CreatePin(targetZDO);
+        }
 
         foreach (var zdo in zdos)
+        {
             minimap.AddPin(zdo.GetPosition(), Death,
                 $"$hud_mapday {EnvMan.instance.GetDay(ZNet.instance.GetTimeSeconds())}", false, false);
+            zdo.Set("IsLastTombstone", false);
+        }
     }
 
     private static void CreatePin(ZDO zdo)
