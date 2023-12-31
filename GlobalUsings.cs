@@ -5,6 +5,7 @@ global using System.Linq;
 global using HarmonyLib;
 global using UnityEngine;
 global using Random = UnityEngine.Random;
+global using Console = System.Console;
 global using ScriptableObject = UnityEngine.ScriptableObject;
 global using static UnityEngine.ScriptableObject;
 global using JFUtils;
