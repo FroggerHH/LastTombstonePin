@@ -1,4 +1,6 @@
-﻿namespace LastTombstonePin.Patch;
+﻿using System.Threading.Tasks;
+
+namespace LastTombstonePin.Patch;
 
 [HarmonyPatch]
 public class RPC
@@ -19,14 +21,17 @@ public class RPC
     }
 
 
-    private static void Teleport_Server(long _, string playerName)
+    private static async void Teleport_Server(long _, string playerName)
     {
-        var importantZdOs = ZDOMan.instance.GetImportantZDOs(Hash);
-        var tombstone =
-            importantZdOs.FirstOrDefault(x => x.GetString(ZDOVars.s_ownerName).Replace(" ", "") == playerName);
+        var tombstone = (await FindTomds(playerName)).LastOrDefault();
 
         //Target player has no tombstone
-        if (tombstone == null) return;
+        if (tombstone == null)
+        {
+            DebugWarning($"Target player has no tombstone: {playerName}");
+            return;
+        }
+
         ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "TeleportPlayerToLastTombstone_Client",
             playerName, tombstone.GetPosition());
     }

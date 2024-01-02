@@ -12,7 +12,7 @@ namespace LastTombstonePin;
 public class Plugin : BaseUnityPlugin
 {
     public const string ModName = "LastTombstonePin",
-        ModVersion = "1.6.0",
+        ModVersion = "1.6.1",
         ModGUID = $"com.{ModAuthor}.{ModName}",
         ModAuthor = "JustAFrogger";
 
