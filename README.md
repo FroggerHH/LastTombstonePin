@@ -4,7 +4,8 @@ Replaces players' last death pin with a Tombstone Pin.
 
 ## About
 
-LastTombstonePin makes it easier for players to reach their last death location when having died several times. Anytime a player dies, the last death pin is replaced with a Tombstone pin.
+LastTombstonePin makes it easier for players to reach their last death location when having died several times. Anytime
+a player dies, the last death pin is replaced with a Tombstone pin.
 
 ## Features
 
@@ -13,7 +14,8 @@ LastTombstonePin makes it easier for players to reach their last death location 
 - Configurable pin type exposed in configuration file to allow for combining with other mods (such as ImmersiveCompass)!
 - Supports pin scaling and animation on minimap for easier finding.
 - Can toggle having players name added to the tombstone pin.
-- Admins can use console command "teleportplayertolasttombstone" alongside the argument of which player to teleport to move that player to their last tombstone pin!
+- Admins can use console command "teleportplayertolasttombstone" alongside the argument of which player to teleport to
+  move that player to their last tombstone pin!
 
 ## Install Notes
 
@@ -35,5 +37,6 @@ This mod was commissioned by `gdragon`.
 
 ## Updates
 
-### Version 1.5.3
-- Corrected teleportplayertolasttombstone console command behavior.
+1.5.1 - Icon fixed<br>
+1.6.1 - Many multiplayer fixes<br>
+1.6.2 - Manifest updated<br>
